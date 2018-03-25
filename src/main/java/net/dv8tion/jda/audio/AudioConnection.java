@@ -563,6 +563,10 @@ public class AudioConnection
 
             try
             {
+                //avoid getfield opcode
+                //yes, this is the only place we explicitly read and store, the other places are quite young in the lifetime
+                AudioSendHandler sendHandler = AudioConnection.this.sendHandler;
+
                 if (sentSilenceOnConnect && sendHandler != null && sendHandler.canProvide())
                 {
                     silenceCounter = -1;
